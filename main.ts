@@ -1,8 +1,7 @@
-import f from'fs';
-const{MAKEFUN_INPUT_DIR:I='/input',MAKEFUN_OUTPUT_DIR:O='/output'}=process.env,
-F=(A,O,f,t,u,h,B,m=f)=>{u[f]=t;for(let c=4;c--;){const q=f+O[c];if(A[q]&&u[q]!=t&&!B.includes(q)){u[q]=t;if(h)h[q]=h[f]+'udlr'[c];m=Math.min(m,F(A,O,q,t,u,h,B))}}return m},
-P=t=>{const w=t.search('\n'),a=[],g=[],b=[];let p=0,i=0;t=t.replace(/\n/g,'');for(const c of t){a[i]=c!='#';if(c>'%'&&c<'/')g.push(i);if(c=='$'||c=='*')b.push(i);if(c=='@'||c=='+')p=i;i++}return{w,a,g,b,o:[-w,w,-1,1],p,Y:p/w|0}},
-S=l=>{const{a,g,o,b,p}=l,s=[],k=[],h=[];const B=[[b,p,'']],H={};for(let e=0;e<B.length&&e<2e5;e++){const[b,pp,mm]=B[e];h[pp]='';F(a,o,pp,++t,s,h,b);const u=t;for(const p of b){for(const c in o){const q=o[c],z=p+q;if(s[p-q]!=u||!a[z]||b.includes(z))continue;const N=[...b];N[b.indexOf(p)]=z;N.sort((a,b)=>a-b);const K2=F(a,o,p,++t,k,0,N)+':'+N;if(H[K2])continue;const W=mm+h[p-q]+'UDLR'[c];if(''+N==''+g)return[p,W];H[K2]=B.push([N,p,W]);}}}},
-G=l=>{let p=l.p,m='',V2=[];const A=[...l.a];A.fill(0,l.Y*l.w,l.Y*l.w+l.w);for(const b of l.b){if(V2[b])continue;F(A,l.o,b,++t,V2,0,[]);const f=x=>V2[x]==t,B=l.b.filter(f),g=l.g.filter(f),a=[...l.a];l.b.forEach(x=>B.includes(x)||(a[x]=0));const v=S({...l,a,g,b:B,p});if(!v)return'';m+=v[1],p=v[0],l.b=l.b.filter(x=>!B.includes(x)).concat(g)}return m};
-let t=0;
-for(let k=6;--k;){const i='i00'+k,m=G(P(f.readFileSync(I+'/'+i+'/level.txt')+'')),d=O+'/'+i;f.mkdirSync(d);f.writeFileSync(d+'/solution.txt',m)}
+f=require('fs');
+({MAKEFUN_INPUT_DIR:I='/input',MAKEFUN_OUTPUT_DIR:O='/output'}=process.env);D='udlr';t=0;mn=1e9;s=[];h=[];
+F=(A,x,B,S,P2,m)=>{S[x]=t;x<mn&&(mn=x);for(let c=4;c--;){y=x+(m?-o[c]:o[c]);if(A[y]!='#'&&S[y]!=t&&(m?A[y-o[c]]!='#':!B?.includes(y))){if(P2)P2[y]=P2[x]+D[c];F(A,y,B,S,P2,m)}}};
+for(k=6;--k;){T=f.readFileSync(I+'/i00'+k+'/level.txt')+'';w=T.search('\n');W=w+1;o=[-W,W,-1,1];g=[];b=[];for(x=0;x<T.length;x++)c=T[x],c>'%'&&c<'/'&&g.push(x),'$*'.includes(c)&&b.push(x),'@+'.includes(c)&&(p=x);Y=p-p%W;A=[...T].fill('#',Y,Y+w);a='';
+for(B0 of b){t++;F(A,B0,null,s,0,0);z=x=>s[x]==t;B=b.filter(z);R=g.filter(z);X=b.filter(x=>!z(x));L=[];t++;for(x of R)F(T,x,null,L,0,1);Q=[[B,p,'']];H={};
+for(e=0;Q[e]&&e<9e5;e++){[B,pp,mm]=Q[e];if(B==''+R){a+=mm;p=pp;b=X.concat(R);break}h[pp]='';mn=1e9;t++;F(T,pp,CB=B.concat(X),s,h,0);if(H[V=mn+':'+B])continue;H[V]=1;for(q of B)for(c=4;c--;){y=q+o[c];if(s[q-o[c]]!=t||T[y]=='#'||CB.includes(y)||!L[y])continue;N=[...B];N[B.indexOf(q)]=y;N.sort((x,y)=>x-y);Q.push([N,q,mm+h[q-o[c]]+D[c]])}}}
+f.mkdirSync(q=O+'/i00'+k);f.writeFileSync(q+'/solution.txt',a)}
